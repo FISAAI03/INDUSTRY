@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>캐시백 결과</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .result-wrapper {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .result-wrapper h2 {
+      font-size: 24px;
+      color: #00b88d;
+      margin-bottom: 20px;
+    }
+
+    .result-wrapper p {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .consult-box, .ai-box {
+      background: #f7fafd;
+      padding: 20px;
+      border-left: 5px solid #00b88d;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .consult-box h3, .ai-box h3 {
+      margin-top: 0;
+      color: #008f6b;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 20px;
+      background-color: #00b88d;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #009f78;
+    }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+
+  <div class="result-wrapper">
+    <h2>📊 분석 결과</h2>
+    <p><strong>기준 사용량:</strong> {{ base_usage }} kWh</p>
+    <p><strong>현재 사용량:</strong> {{ current_usage }} kWh</p>
+    <p><strong>절약률:</strong> {{ save_rate }}%</p>
+    <p><strong>예상 캐시백:</strong> {{ cashback }} 원</p>
+
+    <div class="consult-box">
+      <h3>🔍 기본 컨설팅 제안</h3>
+      <p>{{ message }}</p>
+    </div>
+
+    {% if gpt_advice %}
+    <div class="ai-box">
+      <h3>🧠 AI 기반 절감 전략 제안</h3>
+      <p>{{ gpt_advice }}</p>
+    </div>
+    {% endif %}
+
+    <a href="/cashback" class="btn">🔄 다시 분석하기</a>
+  </div>
+</body>
+</html>

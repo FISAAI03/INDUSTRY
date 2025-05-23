@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AI 에너지 진단</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .ai-wrapper {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .ai-wrapper h2 {
+      margin-bottom: 24px;
+      text-align: center;
+      color: #222;
+    }
+
+    .ai-form label {
+      display: block;
+      margin: 16px 0 6px;
+      font-weight: 600;
+    }
+
+    .ai-form input,
+    .ai-form select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .ai-form button {
+      margin-top: 24px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #00c389;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .ai-form button:hover {
+      background-color: #00aa76;
+    }
+
+    .result-box {
+      margin-top: 40px;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 12px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+  <div class="ai-wrapper">
+    <h2>맞춤형 에너지 절감 전략</h2>
+    <form class="ai-form" method="POST">
+      <label for="region">거주 지역</label>
+      <input type="text" name="region" id="region" required>
+
+      <label for="building_type">건물 유형</label>
+      <select name="building_type" id="building_type" required>
+        <option value="아파트">아파트</option>
+        <option value="단독주택">단독주택</option>
+        <option value="상가">상가</option>
+      </select>
+
+      <label for="usage">월 평균 사용량 (kWh)</label>
+      <input type="number" name="usage" id="usage" required>
+
+      <button type="submit">AI 분석 받기</button>
+    </form>
+
+    {% if result %}
+    <div class="result-box">
+      <h3>💡 AI 절전 전략</h3>
+      <p>{{ result }}</p>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>

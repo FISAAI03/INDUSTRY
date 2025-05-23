@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>절전 챌린지</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .section-box {
+      background-color: #f0f9f6;
+      padding: 20px;
+      margin-top: 30px;
+      border-left: 5px solid #00b88d;
+      border-radius: 10px;
+    }
+
+    .chart-box img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin-top: 10px;
+    }
+
+    .ranking-box ol {
+      padding-left: 20px;
+    }
+
+    form label {
+      font-weight: bold;
+    }
+
+    form input {
+      padding: 10px;
+      margin-bottom: 15px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    form .btn {
+      background-color: #00b88d;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    form .btn:hover {
+      background-color: #009f78;
+    }
+
+    .readonly {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+
+  <div class="container">
+    <h1>🌱 절전 챌린지</h1>
+
+    <!-- 참여 폼 또는 완료 메시지 -->
+    <div class="section-box">
+      <h3>✅ 이번 달 실천하기</h3>
+
+      {% if already_participated %}
+        <p><strong>이미 참여하셨습니다!</strong> 다시 입력할 수 없습니다.</p>
+        <ul>
+          <li><strong>월:</strong> {{ latest_entry.year_months }}</li>
+          <li><strong>기준 사용량:</strong> {{ latest_entry.base_usage }} kWh</li>
+          <li><strong>실제 사용량:</strong> {{ latest_entry.usages }} kWh</li>
+          <li><strong>절약률:</strong> {{ latest_entry.save_rate }}%</li>
+        </ul>
+      {% else %}
+        <form method="POST">
+          <label>📅 월 선택:</label>
+          <input type="month" name="year_months" required>
+
+          <label>📏 기준 사용량 (kWh):</label>
+          <input type="number" name="base_usage" required>
+
+          <label>💡 실제 사용량 (kWh):</label>
+          <input type="number" name="usages" required>
+
+          <button type="submit" class="btn">참여하기</button>
+        </form>
+      {% endif %}
+    </div>
+
+    <!-- 분석 결과 -->
+    {% if result %}
+      <div class="section-box">
+        <h3>🎉 분석 결과</h3>
+        <p>{{ result }}</p>
+      </div>
+    {% endif %}
+
+    <!-- 절약률 그래프 -->
+    {% if chart %}
+      <div class="section-box chart-box">
+        <h3>📈 절약률 변화 추이</h3>
+        <img src="data:image/png;base64,{{ chart }}" alt="절약률 그래프">
+      </div>
+    {% endif %}
+
+    <!-- TOP10 랭킹 -->
+    {% if ranking %}
+      <div class="section-box ranking-box">
+        <h3>🏅 이번 달 TOP 10 절전 실천자</h3>
+        <ol>
+          {% for user in ranking %}
+            <li>{{ user.username }} - {{ user.save_rate }}%</li>
+          {% endfor %}
+        </ol>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

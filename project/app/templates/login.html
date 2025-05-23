@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% include '_navbar.html' %}
+  <div class="form-wrapper">
+    <h2>로그인</h2>
+    <form method="POST">
+      <label>이메일</label>
+      <input type="email" name="email" required>
+
+      <label>비밀번호</label>
+      <input type="password" name="password" required>
+
+      <button type="submit">로그인</button>
+    </form>
+    <p>계정이 없으신가요? <a href="/signup">회원가입</a></p>
+  </div>
+</body>
+</html>

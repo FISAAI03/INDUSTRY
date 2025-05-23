@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>에너지 캐시백 컨설팅</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .form-wrapper {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-wrapper h1 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 30px;
+      font-size: 26px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #00b88d;
+      outline: none;
+    }
+
+    .form-wrapper button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #00b88d;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .form-wrapper button:hover {
+      background-color: #009f78;
+    }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+
+  <div class="form-wrapper">
+    <h1>에너지캐시백 컨설팅</h1>
+    <form method="POST">
+      <div class="form-group">
+        <label>거주 지역</label>
+        <input type="text" name="region" required>
+      </div>
+
+      <div class="form-group">
+        <label>건물 유형</label>
+        <select name="building_type">
+          <option value="아파트">아파트</option>
+          <option value="단독주택">단독주택</option>
+          <option value="상가">상가</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>가구원 수</label>
+        <input type="number" name="family_size" min="1" required>
+      </div>
+
+      <div class="form-group">
+        <label>계절</label>
+        <select name="season">
+          <option value="여름">여름</option>
+          <option value="겨울">겨울</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>기준 사용량 (kWh)</label>
+        <input type="number" name="base_usage" required>
+      </div>
+
+      <div class="form-group">
+        <label>현재 사용량 (kWh)</label>
+        <input type="number" name="current_usage" required>
+      </div>
+
+      <button type="submit">🔍 분석하기</button>
+    </form>
+  </div>
+</body>
+</html>

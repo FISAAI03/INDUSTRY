@@ -1,0 +1,156 @@
+/* 기본 설정 */
+body {
+  margin: 0;
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  background: #f1f5f9;
+  color: #222;
+}
+
+/* 네비게이션 바 */
+.navbar {
+  background: linear-gradient(to right, #0cd894);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links li a:hover {
+  text-decoration: underline;
+}
+
+/* 헤더 영역 */
+.main-header {
+  background: linear-gradient(135deg, #5fecbd);
+  color: white;
+  text-align: center;
+  padding: 4rem 1rem 3rem;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.main-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.main-header p {
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+/* 카드 섹션 */
+.service-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 1rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 1.5rem;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+  max-width: 750px;
+  width: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon img {
+  width: 60px;
+  height: 60px;
+  margin-right: 1.5rem;
+}
+
+.card-content h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card-content p {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* 버튼 */
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.4rem;
+  background-color: #10b981;
+  color: white;
+  border-radius: 1.2rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #059669;
+  transform: scale(1.05);
+}
+
+
+.navbar {
+  background-color: #2d5be3;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}

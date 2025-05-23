@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="logo"><a href="/">에너지서비스</a></div>
+  <ul class="nav-links">
+    <li><a href="/">홈</a></li>
+    <li><a href="/ai-diagnosis">진단</a></li>
+    <li><a href="/cashback">캐시백</a></li>
+    <li><a href="/challenge">챌린지</a></li>
+    <li><a href="/support">지원금</a></li>
+    <li><a href="/contact">문의</a></li>
+
+    {% if session.get('user_id') %}
+      <li><a href="/logout">로그아웃</a></li>
+    {% else %}
+      <li><a href="/login">로그인</a></li>
+      <li><a href="/signup">회원가입</a></li>
+    {% endif %}
+  </ul>
+</nav>

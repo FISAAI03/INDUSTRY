@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/project  # ← 현재 디렉토리를 컨테이너의 /project에 연결
+    env_file:
+      - .env
+    restart: always
