@@ -76,7 +76,7 @@
       {% else %}
         <form method="POST">
           <label>📅 월 선택:</label>
-          <input type="month" name="year_months" required>
+         <input type="month" name="year_months" value="{{ current_month }}" required>
 
           <label>📏 기준 사용량 (kWh):</label>
           <input type="number" name="base_usage" required>

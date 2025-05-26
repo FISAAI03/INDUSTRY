@@ -4,6 +4,25 @@ import os
 import pymysql
 from urllib.parse import urlparse
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
+from flask import Flask, redirect, url_for, session
+from authlib.integrations.flask_client import OAuth
+
+app = Flask(__name__)
+app.secret_key = "your_secret"
+oauth = OAuth(app)
+KAKAO_CLIENT_ID = os.getenv("KAKAO_CLIENT_ID")
+
+oauth.register(
+    name='kakao',
+    client_id=os.getenv('KAKAO_CLIENT_ID'),
+    access_token_url='https://kauth.kakao.com/oauth/token',
+    access_token_params=None,
+    authorize_url='https://kauth.kakao.com/oauth/authorize',
+    authorize_params=None,
+    api_base_url='https://kapi.kakao.com/v2/',
+    client_kwargs={'scope': 'profile_nickname account_email'}
+)
 
 # ✅ OpenAI API 설정
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -54,6 +73,10 @@ def create_app():
             email = request.form['email']
             username = request.form['username']
             password = request.form['password']
+            region = request.form['region']
+            building_type = request.form['building_type']
+            household_size = int(request.form['household_size'])
+
             hashed_pw = generate_password_hash(password)
 
             conn = get_db_connection()
@@ -71,17 +94,100 @@ def create_app():
                 flash("이미 존재하는 닉네임입니다.")
                 return redirect('/signup')
 
-            # 회원 등록
+            # 회원 등록 (region, building_type, household_size 추가됨)
             cur.execute("""
-                INSERT INTO users (username, email, password_hash)
-                VALUES (%s, %s, %s)
-            """, (username, email, hashed_pw))
+                INSERT INTO users (username, email, password_hash, region, building_type, household_size)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (username, email, hashed_pw, region, building_type, household_size))
+
             conn.close()
 
             flash("회원가입 완료! 로그인 해주세요.")
             return redirect('/login')
 
         return render_template("signup.html")
+    
+    @app.route('/kakao/additional', methods=['GET', 'POST'])
+    def kakao_additional():
+        if request.method == 'POST':
+            username = request.form['username']
+            region = request.form['region']
+            building_type = request.form['building_type']
+            household_size = int(request.form['household_size'])
+            email = session.get('pending_email')  # 카카오 콜백에서 저장한 값
+            kakao_id = session.get('pending_id')
+
+            conn = get_db_connection()
+            cur = conn.cursor()
+
+            cur.execute("""
+                INSERT INTO users (id, username, email, password_hash, region, building_type, household_size)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, (kakao_id, username, email, 'kakao_oauth', region, building_type, household_size))
+
+            session['user_id'] = kakao_id
+            session['username'] = username
+            session.pop('pending_email', None)
+            session.pop('pending_id', None)
+
+            flash("카카오 로그인 + 정보 등록 완료!")
+            return redirect('/')
+
+        return render_template("kakao_additional.html")
+
+    @app.route('/login/kakao')
+    def login_kakao():
+        redirect_uri = url_for('kakao_callback', _external=True)
+        return oauth.kakao.authorize_redirect(redirect_uri)
+
+    @app.route('/login/kakao/callback')
+    def kakao_callback():
+        token = oauth.kakao.authorize_access_token()
+        resp = oauth.kakao.get('user/me')
+        profile = resp.json()
+
+        kakao_id = profile['id']
+        email = profile['kakao_account'].get('email')
+        nickname = profile['kakao_account']['profile']['nickname']
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT id, username FROM users WHERE email = %s", (email,))
+        user = cur.fetchone()
+        conn.close()
+
+        if user:
+            session['user_id'] = user[0]
+            session['username'] = user[1]
+            flash("카카오 로그인 성공!")
+            return redirect('/')
+        else:
+            session['pending_email'] = email
+            session['pending_id'] = kakao_id
+            return redirect('/kakao/additional')
+
+
+    @app.route('/check-email', methods=['POST'])
+    def check_email():
+        email = request.json.get('email')
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM users WHERE email = %s", (email,))
+        exists = cur.fetchone() is not None
+        conn.close()
+        return {'exists': exists}
+
+    @app.route('/check-username', methods=['POST'])
+    def check_username():
+        username = request.json.get('username')
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM users WHERE username = %s", (username,))
+        exists = cur.fetchone() is not None
+        conn.close()
+        return {'exists': exists}
+
 
     # 로그인
     @app.route('/login', methods=['GET', 'POST'])
@@ -133,7 +239,8 @@ def create_app():
         import matplotlib.pyplot as plt
         import io, base64
         import pandas as pd
-        from datetime import datetime
+
+        current_month = datetime.today().strftime('%Y-%m')  # ⬅️ 현재 년-월 문자열
 
         conn = get_db_connection()
         cur = conn.cursor()
@@ -145,21 +252,16 @@ def create_app():
             usages = float(request.form['usages'])
             save_rate = round(((base - usages) / base) * 100, 2) if base else 0
 
-            # 사용자가 이미 해당 월에 참여했는지 확인
-            cur.execute("""
-                SELECT id FROM energy_challenges
-                WHERE user_id = %s AND year_months = %s
-            """, (user_id, year_months))
+            # 중복 여부 확인
+            cur.execute("SELECT id FROM energy_challenges WHERE user_id = %s AND year_months = %s", (user_id, year_months))
             if cur.fetchone():
                 already_participated = True
                 result = f"⚠️ {year_months}에는 이미 참여하셨습니다."
             else:
-                # INSERT
                 cur.execute("""
                     INSERT INTO energy_challenges (user_id, year_months, usages, base_usage, save_rate)
                     VALUES (%s, %s, %s, %s, %s)
                 """, (user_id, year_months, usages, base, save_rate))
-
                 result = f"✅ {year_months} 기준 절약률은 {save_rate}%입니다."
                 already_participated = True
                 latest_entry = {
@@ -169,26 +271,27 @@ def create_app():
                     'save_rate': save_rate
                 }
 
-        # 사용자의 가장 최근 참여 정보 가져오기
-        cur.execute("""
-            SELECT year_months, usages, base_usage, save_rate
-            FROM energy_challenges
-            WHERE user_id = %s
-            ORDER BY year_months DESC
-            LIMIT 1
-        """, (user_id,))
-        row = cur.fetchone()
-        if row and not latest_entry:
-            already_participated = True
-            latest_entry = {
-                'year_months': row[0],
-                'usages': row[1],
-                'base_usage': row[2],
-                'save_rate': row[3]
-            }
-            result = f"📅 최근 참여한 {row[0]} 기준 절약률은 {row[3]}%입니다."
+        # 가장 최근 참여 정보 조회
+        if not latest_entry:
+            cur.execute("""
+                SELECT year_months, usages, base_usage, save_rate
+                FROM energy_challenges
+                WHERE user_id = %s
+                ORDER BY year_months DESC
+                LIMIT 1
+            """, (user_id,))
+            row = cur.fetchone()
+            if row:
+                already_participated = True
+                latest_entry = {
+                    'year_months': row[0],
+                    'usages': row[1],
+                    'base_usage': row[2],
+                    'save_rate': row[3]
+                }
+                result = f"📅 최근 참여한 {row[0]} 기준 절약률은 {row[3]}%입니다."
 
-        # ✅ 사용자 절약률 시각화
+        # 사용자 절약률 그래프
         cur.execute("""
             SELECT year_months, save_rate
             FROM energy_challenges
@@ -218,7 +321,7 @@ def create_app():
                 buf.close()
                 plt.close()
 
-        # ✅ 절약률 TOP 10 랭킹
+        # TOP 10
         cur.execute("""
             SELECT u.username, e.save_rate
             FROM energy_challenges e
@@ -236,8 +339,8 @@ def create_app():
                             chart=chart,
                             ranking=ranking,
                             already_participated=already_participated,
-                            latest_entry=latest_entry)
-
+                            latest_entry=latest_entry,
+                            current_month=current_month)  # ⬅️ 현재 월을 템플릿으로 전달
     # 캐시백 컨설팅
     @app.route('/cashback', methods=['GET', 'POST'])
     def cashback():
