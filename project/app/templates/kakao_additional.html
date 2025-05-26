@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카카오 추가 정보 입력</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      background-color: #f5f9f8;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 60px auto;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .form-container label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-container input,
+    .form-container select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #00b88d;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .form-container button:hover {
+      background-color: #009f78;
+    }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+
+  <div class="form-container">
+    <h2>📝 추가 정보 입력</h2>
+    <form method="POST">
+      <label for="username">닉네임</label>
+      <input type="text" name="username" id="username" required>
+
+      <label for="region">거주 지역</label>
+      <input type="text" name="region" id="region" placeholder="예: 서울특별시" required>
+
+      <label for="building_type">건물 유형</label>
+      <select name="building_type" id="building_type" required>
+        <option value="">선택하세요</option>
+        <option value="아파트">아파트</option>
+        <option value="단독주택">단독주택</option>
+        <option value="빌라">빌라</option>
+        <option value="기타">기타</option>
+      </select>
+
+      <label for="household_size">가구원 수</label>
+      <input type="number" name="household_size" id="household_size" min="1" required>
+
+      <button type="submit">등록하기</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -12,3 +12,4 @@ seaborn==0.13.1
 scipy==1.12.0
 cryptography==42.0.5
 pymysql[rsa]
+authlib
