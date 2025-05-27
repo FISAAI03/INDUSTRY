@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>관리자 문의 목록</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      background-color: #f5f6f7;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #222;
+    }
+
+    .container {
+      max-width: 840px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      text-align: left;
+      margin-bottom: 28px;
+      font-size: 22px;
+      color: #00b88d;
+      font-weight: 600;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e3e3e3;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: #00b88d;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .card-header h4 {
+      font-size: 16px;
+      margin: 0;
+      color: #111;
+      font-weight: 500;
+    }
+
+    .card-header .meta {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .status {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-left: 8px;
+    }
+
+    .answered {
+      background: #e7f8f0;
+      color: #00a076;
+    }
+
+    .pending {
+      background: #fef4e5;
+      color: #d48806;
+    }
+
+    .card-body {
+      display: none;
+      margin-top: 16px;
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+
+    .question {
+      font-size: 14px;
+      line-height: 1.6;
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    textarea {
+      width: 160%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+    }
+
+    .btn {
+      margin-top: 12px;
+      padding: 8px 16px;
+      background-color: #00b88d;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      float: right;
+    }
+
+    .btn:hover {
+      background-color: #009f78;
+    }
+
+    .answered-box {
+      background: #f0fdf8;
+      border-left: 4px solid #28a745;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #155724;
+    }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+  <div class="container">
+    <h2>📁 관리자 문의 목록</h2>
+
+    {% for inquiry in rows %}
+      <div class="card">
+        <div class="card-header" onclick="toggleCard('{{ inquiry[0] }}')">
+          <h4>{{ inquiry[2] }}님의 문의</h4>
+          <div class="meta">
+            {{ inquiry[6].strftime('%Y-%m-%d %H:%M') }}
+            {% if inquiry[5] %}
+              <span class="status answered">답변 완료</span>
+            {% else %}
+              <span class="status pending">답변 대기</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="card-body" id="body-{{ inquiry[0] }}">
+          <div class="question">{{ inquiry[4] }}</div>
+
+          {% if inquiry[5] %}
+            <div class="answered-box">
+              <strong>✅ 답변:</strong><br>{{ inquiry[5] }}
+            </div>
+          {% else %}
+            <form method="POST">
+              <input type="hidden" name="inquiry_id" value="{{ inquiry[0] }}">
+              <textarea name="answer" rows="4" placeholder="답변을 입력하세요..." required></textarea>
+              <button type="submit" class="btn">답변 등록</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function toggleCard(id) {
+      const el = document.getElementById("body-" + id);
+      el.style.display = el.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+</html>

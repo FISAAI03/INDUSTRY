@@ -134,7 +134,13 @@
       <input type="password" name="password" id="password" required>
 
       <label for="region">거주 지역</label>
-      <input type="text" name="region" id="region" placeholder="예: 서울특별시" required>
+<select name="region" id="region" required>
+  {% for region in regions %}
+    <option value="{{ region }}">{{ region }}</option>
+  {% endfor %}
+</select>
+
+
 
       <label for="building_type">건물 유형</label>
       <select name="building_type" id="building_type" required>
