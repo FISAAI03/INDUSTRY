@@ -2,46 +2,63 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>AI 에너지 진단</title>
+  <title>맞춤형 에너지 진단</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
+    body {
+      background-color: #f5f9f8;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #222;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
     .ai-wrapper {
-      max-width: 600px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 30px;
+      background: #ffffff;
+      padding: 40px;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     }
 
-    .ai-wrapper h2 {
-      margin-bottom: 24px;
+    h2 {
       text-align: center;
-      color: #222;
+      margin-bottom: 30px;
+      color: #00b88d;
+      font-size: 24px;
     }
 
-    .ai-form label {
+    label {
       display: block;
       margin: 16px 0 6px;
-      font-weight: 600;
+      font-weight: bold;
+      color: #333;
     }
 
-    .ai-form input,
-    .ai-form select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    .ai-form button {
-      margin-top: 24px;
+    input,
+    select {
       width: 100%;
       padding: 12px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    input[readonly] {
+      background-color: #f3f3f3;
+    }
+
+    button {
+      margin-top: 24px;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
       font-weight: bold;
-      background-color: #00c389;
+      background-color: #00b88d;
       color: white;
       border: none;
       border-radius: 10px;
@@ -49,46 +66,101 @@
       transition: background-color 0.2s;
     }
 
-    .ai-form button:hover {
-      background-color: #00aa76;
+    button:hover {
+      background-color: #009f78;
     }
 
     .result-box {
       margin-top: 40px;
       background: #f9f9f9;
-      padding: 20px;
+      padding: 30px;
       border-radius: 12px;
-      line-height: 1.7;
+      line-height: 1.8;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .result-box h3 {
+      margin-bottom: 20px;
+      color: #00a076;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .result-box ul {
+      list-style-type: disc;
+      padding-left: 24px;
+    }
+
+    .result-box li {
+      margin-bottom: 10px;
+    }
+
+    .comparison-box {
+      background-color: #e9f7f3;
+      padding: 16px;
+      margin-top: 20px;
+      border-left: 5px solid #00b88d;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .text-red {
+      color: red;
+      font-weight: bold;
+    }
+
+    .text-green {
+      color: green;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   {% include '_navbar.html' %}
-  <div class="ai-wrapper">
-    <h2>맞춤형 에너지 절감 전략</h2>
-    <form class="ai-form" method="POST">
-      <label for="region">거주 지역</label>
-      <input type="text" name="region" id="region" required>
 
-      <label for="building_type">건물 유형</label>
-      <select name="building_type" id="building_type" required>
-        <option value="아파트">아파트</option>
-        <option value="단독주택">단독주택</option>
-        <option value="상가">상가</option>
-      </select>
+  <div class="container">
+    <div class="ai-wrapper" id="diagnosis-form">
+      <h2>맞춤형 에너지 절감 전략</h2>
+      <form method="POST" aria-label="에너지 진단 폼">
+        <label for="region">거주 지역</label>
+        <input type="text" name="region" value="{{ region }}" readonly aria-readonly="true">
 
-      <label for="usage">월 평균 사용량 (kWh)</label>
-      <input type="number" name="usage" id="usage" required>
+        <label for="building_type">건물 유형</label>
+        <input type="text" name="building_type" value="{{ building_type }}" readonly aria-readonly="true">
 
-      <button type="submit">AI 분석 받기</button>
-    </form>
+        <label for="usage">월 평균 사용량 (kWh)</label>
+        <input type="number" name="usage" id="usage" required min="1" placeholder="예: 350">
 
-    {% if result %}
-    <div class="result-box">
-      <h3>💡 AI 절전 전략</h3>
-      <p>{{ result }}</p>
+        <button type="submit">AI 분석 받기</button>
+      </form>
+
+      {% if breakdown %}
+      <div class="result-box">
+        <h3>💡 항목별 절전 전략</h3>
+        {% if rate is defined %}
+        <div class="comparison-box">
+          <strong>📊 지역 평균 대비 사용량:</strong>
+          {{ rate|abs }}%
+          <span class="{{ 'text-red' if rate > 0 else 'text-green' }}">
+            {{ '높음' if rate > 0 else '낮음' }}
+          </span>
+        </div>
+        {% endif %}
+        <ul>
+          <li><strong>조명:</strong> {{ breakdown.조명 }}</li>
+          <li><strong>대기전력:</strong> {{ breakdown.대기전력 }}</li>
+          <li><strong>시간대별 사용:</strong> {{ breakdown['시간대별 사용'] }}</li>
+          <li><strong>냉난방:</strong> {{ breakdown.냉난방 }}</li>
+          <li><strong>지원금:</strong> {{ breakdown.지원금 }}</li>
+        </ul>
+      </div>
+      {% elif result %}
+      <div class="result-box">
+        <h3>💡 절전 전략</h3>
+        <p>{{ result }}</p>
+      </div>
+      {% endif %}
     </div>
-    {% endif %}
   </div>
 </body>
 </html>

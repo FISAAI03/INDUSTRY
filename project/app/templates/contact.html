@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>문의</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { background-color: #f5f9f8; font-family: 'Noto Sans KR', sans-serif; }
+    .container { max-width: 900px; margin: 60px auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    h2 { text-align: center; color: #00b88d; margin-bottom: 30px; }
+    .top-bar { text-align: right; margin-bottom: 20px; }
+    .btn { display: inline-block; padding: 10px 16px; background: #00b88d; color: white; border-radius: 8px; font-weight: bold; text-decoration: none; }
+    .btn:hover { background: #009f78; }
+    .card { background-color: #f9f9f9; border-left: 5px solid #00b88d; padding: 20px; margin-bottom: 20px; border-radius: 12px; }
+    .card p { margin: 6px 0; }
+    .answered { color: green; font-weight: bold; }
+    .pending { color: orange; font-weight: bold; }
+    .empty { text-align: center; color: #666; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+  <div class="container">
+    <h2>📋 내 문의 내역</h2>
+    <div class="top-bar">
+      <a href="/contact/write" class="btn">✏️ 문의하기</a>
+    </div>
+
+    {% if rows %}
+      {% for inquiry in rows %}
+        <div class="card">
+          <p><strong>📅 {{ inquiry[6].strftime('%Y-%m-%d %H:%M') }}</strong></p>
+          <p><strong>문의 내용:</strong> {{ inquiry[4] }}</p>
+          {% if inquiry[5] %}
+            <p class="answered">✅ 답변: {{ inquiry[5] }}</p>
+          {% else %}
+            <p class="pending">⏳ 답변 대기 중</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">아직 문의 내역이 없습니다.</div>
+    {% endif %}
+  </div>
+</body>
+</html>

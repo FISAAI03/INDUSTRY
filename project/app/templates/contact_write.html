@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>문의하기</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { background-color: #f5f9f8; font-family: 'Noto Sans KR', sans-serif; }
+    .container { max-width: 600px; margin: 60px auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    h2 { text-align: center; color: #00b88d; margin-bottom: 30px; }
+    label { font-weight: bold; display: block; margin-bottom: 6px; color: #333; }
+    input, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; }
+    input[readonly] { background: #f3f3f3; }
+    button { width: 100%; padding: 12px; background: #00b88d; color: white; font-size: 16px; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; }
+    button:hover { background: #009f78; }
+  </style>
+</head>
+<body>
+  {% include '_navbar.html' %}
+  <div class="container">
+    <h2>✏️ 문의 작성</h2>
+    <form method="POST">
+      <label for="name">이름</label>
+      <input type="text" name="name" value="{{ session['username'] }}" readonly>
+
+      <label for="email">이메일</label>
+      <input type="email" name="email" value="{{ user_email }}" readonly>
+
+      <label for="message">문의 내용</label>
+      <textarea name="message" rows="6" required></textarea>
+
+      <button type="submit">보내기</button>
+    </form>
+  </div>
+</body>
+</html>

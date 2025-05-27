@@ -117,9 +117,14 @@
     <h2>공공지원금 추천 서비스</h2>
     <form method="POST">
       <div class="form-group">
-        <label>거주 지역 (예: 서울특별시, 대구광역시 등)</label>
-        <input type="text" name="region" required>
-      </div>
+  <label>거주 지역 (선택)</label>
+  <select name="region" required>
+    {% for r in regions %}
+      <option value="{{ r }}">{{ r }}</option>
+    {% endfor %}
+  </select>
+</div>
+
 
       <div class="checkbox-group">
   <input type="checkbox" id="led" name="actions" value="LED 조명 교체">
