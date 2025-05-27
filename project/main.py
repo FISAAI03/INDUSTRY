@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask import Flask, redirect, url_for, session
 from authlib.integrations.flask_client import OAuth
+import random
 
 app = Flask(__name__)
 app.secret_key = "your_secret"
@@ -131,10 +132,21 @@ def create_app():
     app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
     app.secret_key = "your_secret_key"
 
+
+
+
     # 홈
     @app.route('/')
     def index():
-        return render_template("index.html")
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT COUNT(*) FROM energy_challenges")
+        challenge_count = cur.fetchone()[0]
+        conn.close()
+
+        return render_template('index.html', challenge_count=challenge_count)
+
+
 
     @app.route('/signup', methods=['GET', 'POST'])
     def signup():

@@ -4,19 +4,43 @@
   <meta charset="UTF-8">
   <title>에너지 효율 진단 서비스</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .challenge-stats {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 18px;
+      color: #444;
+    }
+
+    .challenge-stats .emoji {
+      font-size: 24px;
+    }
+
+    .challenge-stats .highlight {
+      color: #00b88d;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-    {% include '_navbar.html' %}
+  {% include '_navbar.html' %}
 
+  <!-- 🔥 챌린지 참여 수 -->
+  <section class="challenge-stats">
+    <span class="emoji">🌱</span>
+    지금까지 <span class="highlight">{{ challenge_count }}명</span>이 함께 절전 챌린지에 참여했어요!
+  </section>
 
-  <!-- 헤더 섹션 -->
-  <header class="main-header">
-    <h1>에너지 효율 진단 서비스</h1>
-    <p>에너지 절감을 위한 효율화 방안을 제시합니다</p>
-  </header>
-
-  <!-- 카드 섹션 -->
+  <!-- 서비스 카드 섹션 -->
   <section class="service-section">
     <div class="card">
       <div class="card-icon">
@@ -52,18 +76,16 @@
     </div>
 
     <div class="card">
-  <div class="card-icon">
-    <img src="{{ url_for('static', filename='img/cheer.png') }}" alt="지원금 아이콘">
-  </div>
-  <div class="card-content">
-    <h2>절전 실천자 공공지원금 추천</h2>
-    <p>절약 실천자 대상 정부/지자체 지원금 정보 자동 제공</p>
-    <a class="btn" href="/support">바로가기</a>
-  </div>
-</div>
+      <div class="card-icon">
+        <img src="{{ url_for('static', filename='img/cheer.png') }}" alt="지원금 아이콘">
+      </div>
+      <div class="card-content">
+        <h2>절전 실천자 공공지원금 추천</h2>
+        <p>절약 실천자 대상 정부/지자체 지원금 정보 자동 제공</p>
+        <a class="btn" href="/support">바로가기</a>
+      </div>
+    </div>
   </section>
-
-  
 
 </body>
 </html>
