@@ -1,91 +1,75 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>에너지 효율 진단 서비스</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    .challenge-stats {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 24px;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-size: 18px;
-      color: #444;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>에너지 효율 진단 서비스</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
+    {% include '_navbar.html' %}
 
-    .challenge-stats .emoji {
-      font-size: 24px;
-    }
+    <main class="px-10 py-10">
+      <section
+        class="min-h-[480px] bg-cover bg-center rounded-xl p-4 text-center flex flex-col items-center justify-center gap-6"
+        style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuAr_Z3GS_2AMp6iRys5C5fWdFljNP9uwEveEOVk8xP9W2bbSkal-I2uqIv-_szRjhI3tMx5X46UwR3Vy_w54v7W-F2U8MnvuKt4E5u0QQrZXOJ7tJMfFEWE-VvrC6lAMmbarMdsrKRTdHqNrDkMb95VN0y4vUVbODVD-tJt6QRxx3rG--IJ1_cymxRJw-M5evCqwNL5IviCCf3_Zd7A4mF0HMdLgE90rbRso3iRUyJesI5mFq3pMLKUuI7xJ0XGNLcyJiSTcisQEDQ');"
+      >
+        <h1 class="text-white text-4xl font-black leading-tight">지속 가능한 에너지로 가는 길</h1>
+        <p class="text-white text-sm leading-normal max-w-2xl">
+          귀하의 필요에 맞는 맞춤형 에너지 솔루션을 찾아보세요. 전문가의 안내를 받아 탄소 발자국을 줄이고 에너지 비용을 절약하세요.
+        </p>
+        <a
+          href="#"
+          class="h-10 px-5 rounded-full bg-[#a5d8a5] text-sm font-bold text-[#111811] flex items-center justify-center"
+        >솔루션 살펴보기</a>
+      </section>
 
-    .challenge-stats .highlight {
-      color: #00b88d;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
+      <section class="mt-16">
+        <h2 class="text-[32px] font-bold text-[#111811] mb-4">우리의 서비스</h2>
+        <p class="text-[#111811] text-base mb-8 max-w-[720px]">
+          우리는 귀하가 지속 가능성 목표를 달성할 수 있도록 다양한 서비스를 제공합니다.
+        </p>
 
-  {% include '_navbar.html' %}
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
+            <img src="{{ url_for('static', filename='img/home.png') }}" class="w-8 h-8 mb-2" alt="진단 아이콘">
+            <h3 class="font-bold text-lg">에너지효율 진단 서비스</h3>
+            <p class="text-sm">건물의 에너지 사용 분석 및 효율 개선 방안 제공</p>
+            <a href="/ai-diagnosis" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
+          </div>
 
-  <!-- 🔥 챌린지 참여 수 -->
-  <section class="challenge-stats">
-    <span class="emoji">🌱</span>
-    지금까지 <span class="highlight">{{ challenge_count }}명</span>이 함께 절전 챌린지에 참여했어요!
-  </section>
+          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
+            <img src="{{ url_for('static', filename='img/cash.png') }}" class="w-8 h-8 mb-2" alt="캐시백 아이콘">
+            <h3 class="font-bold text-lg">에너지캐시백 컨설팅 서비스</h3>
+            <p class="text-sm">에너지 절약을 통한 캐시백 혜택 제공 컨설팅</p>
+            <a href="/cashback" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
+          </div>
 
-  <!-- 서비스 카드 섹션 -->
-  <section class="service-section">
-    <div class="card">
-      <div class="card-icon">
-        <img src="{{ url_for('static', filename='img/home.png') }}" alt="에너지 효율 아이콘">
-      </div>
-      <div class="card-content">
-        <h2>에너지효율 진단 서비스</h2>
-        <p>건물의 에너지 사용 분석 및 효율 개선 방안 제공</p>
-        <a class="btn" href="/ai-diagnosis">바로가기</a>
-      </div>
-    </div>
+          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
+            <img src="{{ url_for('static', filename='img/challenge.png') }}" class="w-8 h-8 mb-2" alt="챌린지 아이콘">
+            <h3 class="font-bold text-lg">커뮤니티 기반 절전 챌린지 서비스</h3>
+            <p class="text-sm">참여형 절전 실천 캠페인</p>
+            <a href="/challenge" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
+          </div>
 
-    <div class="card">
-      <div class="card-icon">
-        <img src="{{ url_for('static', filename='img/cash.png') }}" alt="캐시백 아이콘">
-      </div>
-      <div class="card-content">
-        <h2>에너지캐시백 컨설팅 서비스</h2>
-        <p>에너지 절약을 통한 캐시백 혜택 제공 컨설팅</p>
-        <a class="btn" href="/cashback">바로가기</a>
-      </div>
-    </div>
+          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
+            <img src="{{ url_for('static', filename='img/cheer.png') }}" class="w-8 h-8 mb-2" alt="지원금 아이콘">
+            <h3 class="font-bold text-lg">절전 실천자 공공지원금 추천</h3>
+            <p class="text-sm">절약 실천자 대상 정부/지자체 지원금 정보 자동 제공</p>
+            <a href="/support" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
+          </div>
+        </div>
+      </section>
 
-    <div class="card">
-      <div class="card-icon">
-        <img src="{{ url_for('static', filename='img/challenge.png') }}" alt="챌린지 아이콘">
-      </div>
-      <div class="card-content">
-        <h2>커뮤니티 기반 절전 챌린지 서비스</h2>
-        <p>참여형 절전 실천 캠페인</p>
-        <a class="btn" href="/challenge">바로가기</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">
-        <img src="{{ url_for('static', filename='img/cheer.png') }}" alt="지원금 아이콘">
-      </div>
-      <div class="card-content">
-        <h2>절전 실천자 공공지원금 추천</h2>
-        <p>절약 실천자 대상 정부/지자체 지원금 정보 자동 제공</p>
-        <a class="btn" href="/support">바로가기</a>
-      </div>
-    </div>
-  </section>
-
-</body>
+      <section class="mt-10 text-center text-[#444]">
+        <p class="text-base">
+          <span class="text-2xl">🌱</span>
+          지금까지 <span class="text-[#00b88d] font-bold">{{ challenge_count }}명</span>이 함께 절전 챌린지에 참여했어요!
+        </p>
+      </section>
+    </main>
+  </body>
 </html>

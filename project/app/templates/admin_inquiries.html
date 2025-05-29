@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>관리자 문의 목록</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
+    /* Ensure the body styles match your main theme */
     body {
-      background-color: #f5f6f7;
-      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
       color: #222;
     }
 
@@ -20,22 +25,24 @@
     h2 {
       text-align: left;
       margin-bottom: 28px;
-      font-size: 22px;
+      font-size: 26px; /* Slightly larger for emphasis */
       color: #00b88d;
-      font-weight: 600;
+      font-weight: 700; /* Bolder font-weight */
     }
 
     .card {
       background: white;
       border: 1px solid #e3e3e3;
-      border-radius: 10px;
-      padding: 18px 20px;
+      border-radius: 12px; /* Slightly more rounded corners */
+      padding: 20px 24px; /* Increased padding */
       margin-bottom: 16px;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s; /* Added box-shadow transition */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Subtle shadow */
     }
 
     .card:hover {
       border-color: #00b88d;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05); /* Enhanced shadow on hover */
     }
 
     .card-header {
@@ -46,22 +53,25 @@
     }
 
     .card-header h4 {
-      font-size: 16px;
+      font-size: 18px; /* Slightly larger font size */
       margin: 0;
       color: #111;
-      font-weight: 500;
+      font-weight: 600; /* Bolder font-weight */
     }
 
     .card-header .meta {
       font-size: 13px;
       color: #666;
+      display: flex;
+      align-items: center;
     }
 
     .status {
       font-size: 12px;
       padding: 4px 8px;
       border-radius: 8px;
-      margin-left: 8px;
+      margin-left: 10px; /* Increased margin-left */
+      font-weight: bold;
     }
 
     .answered {
@@ -82,33 +92,37 @@
     }
 
     .question {
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 15px; /* Slightly larger font size */
+      line-height: 1.7; /* Improved line-height for readability */
       background: #f8f9fa;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 12px;
+      padding: 15px; /* Increased padding */
+      border-radius: 8px; /* Consistent border-radius */
+      margin-bottom: 15px; /* Increased margin-bottom */
+      color: #333;
     }
 
     textarea {
-      width: 160%;
-      padding: 10px;
-      font-size: 14px;
+      width: 100%; /* Changed to 100% for full width */
+      padding: 12px; /* Increased padding */
+      font-size: 15px; /* Consistent font size */
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px; /* Consistent border-radius */
       resize: vertical;
+      min-height: 80px; /* Added min-height */
+      box-sizing: border-box; /* Ensures padding doesn't affect width */
     }
 
     .btn {
-      margin-top: 12px;
-      padding: 8px 16px;
+      margin-top: 15px; /* Increased margin-top */
+      padding: 10px 20px; /* Increased padding */
       background-color: #00b88d;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px; /* Consistent border-radius */
       font-weight: bold;
-      font-size: 14px;
+      font-size: 15px;
       float: right;
+      transition: background-color 0.2s;
     }
 
     .btn:hover {
@@ -118,14 +132,15 @@
     .answered-box {
       background: #f0fdf8;
       border-left: 4px solid #28a745;
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 14px;
+      padding: 15px; /* Increased padding */
+      border-radius: 8px; /* Consistent border-radius */
+      font-size: 15px; /* Consistent font size */
       color: #155724;
+      line-height: 1.7; /* Improved line-height */
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
   <div class="container">
     <h2>📁 관리자 문의 목록</h2>

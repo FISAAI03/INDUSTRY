@@ -3,14 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <title>절전 챌린지</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
+    /* Ensure the body styles match your main theme */
+    body {
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
+      color: #222;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00b88d;
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
     .section-box {
-      background-color: #f0f9f6;
-      padding: 20px;
+      background-color: #ffffff; /* Changed from f0f9f6 to white for consistency */
+      padding: 30px;
       margin-top: 30px;
-      border-left: 5px solid #00b88d;
-      border-radius: 10px;
+      border-radius: 16px; /* Increased border-radius for softer look */
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); /* Added shadow for depth */
+    }
+
+    .section-box h3 {
+      font-size: 20px;
+      color: #008f6b;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #eaf0ea; /* Added a subtle line */
+      padding-bottom: 10px;
     }
 
     .chart-box img {
@@ -18,32 +50,51 @@
       max-width: 600px;
       height: auto;
       margin-top: 10px;
+      display: block; /* Ensures image is centered if max-width is applied */
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .ranking-box ol {
-      padding-left: 20px;
+      padding-left: 25px; /* Slightly increased padding for list items */
+      list-style-type: decimal; /* Explicitly set list style */
+    }
+
+    .ranking-box li {
+      margin-bottom: 8px;
+      color: #444;
+      font-size: 16px;
     }
 
     form label {
-      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600; /* Made label slightly bolder */
+      color: #333;
     }
 
-    form input {
-      padding: 10px;
-      margin-bottom: 15px;
+    form input[type="month"],
+    form input[type="number"] {
+      padding: 12px; /* Increased padding */
+      margin-bottom: 20px; /* Increased margin-bottom */
       width: 100%;
-      border-radius: 5px;
+      border-radius: 10px; /* Increased border-radius for input fields */
       border: 1px solid #ccc;
+      box-sizing: border-box; /* Ensures padding doesn't affect width */
+      font-size: 15px;
     }
 
     form .btn {
       background-color: #00b88d;
       color: white;
-      padding: 12px;
+      padding: 14px; /* Increased padding */
       border: none;
-      border-radius: 5px;
+      border-radius: 10px; /* Increased border-radius */
       cursor: pointer;
       width: 100%;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.2s;
     }
 
     form .btn:hover {
@@ -51,17 +102,17 @@
     }
 
     .readonly {
-      background-color: #eee;
+      background-color: #f3f3f3; /* Lighter background for readonly inputs */
+      cursor: not-allowed;
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
 
   <div class="container">
     <h1>🌱 절전 챌린지</h1>
 
-    <!-- 참여 폼 또는 완료 메시지 -->
     <div class="section-box">
       <h3>✅ 이번 달 실천하기</h3>
 
@@ -75,21 +126,20 @@
         </ul>
       {% else %}
         <form method="POST">
-          <label>📅 월 선택:</label>
-         <input type="month" name="year_months" value="{{ current_month }}" required>
+          <label for="year_months">📅 월 선택:</label>
+          <input type="month" id="year_months" name="year_months" value="{{ current_month }}" required>
 
-          <label>📏 기준 사용량 (kWh):</label>
-          <input type="number" name="base_usage" required>
+          <label for="base_usage">📏 기준 사용량 (kWh):</label>
+          <input type="number" id="base_usage" name="base_usage" required>
 
-          <label>💡 실제 사용량 (kWh):</label>
-          <input type="number" name="usages" required>
+          <label for="usages">💡 실제 사용량 (kWh):</label>
+          <input type="number" id="usages" name="usages" required>
 
           <button type="submit" class="btn">참여하기</button>
         </form>
       {% endif %}
     </div>
 
-    <!-- 분석 결과 -->
     {% if result %}
       <div class="section-box">
         <h3>🎉 분석 결과</h3>
@@ -97,7 +147,6 @@
       </div>
     {% endif %}
 
-    <!-- 절약률 그래프 -->
     {% if chart %}
       <div class="section-box chart-box">
         <h3>📈 절약률 변화 추이</h3>
@@ -105,7 +154,6 @@
       </div>
     {% endif %}
 
-    <!-- TOP10 랭킹 -->
     {% if ranking %}
       <div class="section-box ranking-box">
         <h3>🏅 이번 달 TOP 10 절전 실천자</h3>

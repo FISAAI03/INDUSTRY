@@ -3,8 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>캐시백 결과</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
+    /* Ensure the body styles match your main theme */
+    body {
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
+      color: #222;
+    }
+
     .result-wrapper {
       max-width: 700px;
       margin: 50px auto;
@@ -56,7 +67,7 @@
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
 
   <div class="result-wrapper">

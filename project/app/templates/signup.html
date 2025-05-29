@@ -3,11 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>회원가입</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
+    /* Ensure the body styles match your main theme */
     body {
-      background-color: #f5f9f8;
-      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
+      color: #222;
     }
 
     .signup-container {
@@ -23,12 +29,13 @@
       text-align: center;
       margin-bottom: 30px;
       color: #333;
+      font-size: 28px; /* Slightly larger for emphasis */
     }
 
     .signup-container label {
       display: block;
       margin-bottom: 6px;
-      font-weight: bold;
+      font-weight: 600; /* Bolder label */
       color: #333;
     }
 
@@ -38,15 +45,16 @@
       padding: 12px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
-      border-radius: 10px;
+      border-radius: 10px; /* Consistent border-radius */
       font-size: 16px;
+      box-sizing: border-box; /* Include padding in width calculation */
     }
 
     .input-check-group {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-bottom: 5px;
+      margin-bottom: 15px; /* Increased margin */
     }
 
     .input-check-group input {
@@ -61,7 +69,9 @@
       color: white;
       border-radius: 8px;
       font-size: 14px;
+      font-weight: bold; /* Added font-weight */
       cursor: pointer;
+      transition: background-color 0.2s;
     }
 
     .input-check-group button:hover {
@@ -77,11 +87,11 @@
 
     .signup-container button[type="submit"] {
       width: 100%;
-      padding: 12px;
+      padding: 14px; /* Increased padding */
       background-color: #00b88d;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 10px; /* Consistent border-radius */
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -96,7 +106,8 @@
     .signup-container p {
       text-align: center;
       margin-top: 20px;
-      font-size: 14px;
+      font-size: 15px; /* Slightly larger font size */
+      color: #555;
     }
 
     .signup-container a {
@@ -110,7 +121,7 @@
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
 
   <div class="signup-container">
@@ -134,13 +145,11 @@
       <input type="password" name="password" id="password" required>
 
       <label for="region">거주 지역</label>
-<select name="region" id="region" required>
-  {% for region in regions %}
-    <option value="{{ region }}">{{ region }}</option>
-  {% endfor %}
-</select>
-
-
+      <select name="region" id="region" required>
+        {% for region in regions %}
+          <option value="{{ region }}">{{ region }}</option>
+        {% endfor %}
+      </select>
 
       <label for="building_type">건물 유형</label>
       <select name="building_type" id="building_type" required>
@@ -157,13 +166,12 @@
       <button type="submit">회원가입</button>
     </form>
 
-    <!-- ✅ 카카오 로그인 -->
-    <div style="text-align: center; margin-top: 25px;">
-      <p style="margin-bottom: 10px;">또는</p>
+    <div style="text-align: center; margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px;">
+      <p style="margin-bottom: 15px;">또는</p>
       <a href="/login/kakao">
         <img src="{{ url_for('static', filename='img/kakao.png') }}"
              alt="카카오로 가입하기"
-             style="width: 100%; max-width: 300px; border-radius: 8px;">
+             style="width: 100%; max-width: 300px; border-radius: 8px; display: block; margin: 0 auto;">
       </a>
     </div>
 

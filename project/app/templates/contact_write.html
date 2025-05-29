@@ -3,19 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <title>문의하기</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
-    body { background-color: #f5f9f8; font-family: 'Noto Sans KR', sans-serif; }
-    .container { max-width: 600px; margin: 60px auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-    h2 { text-align: center; color: #00b88d; margin-bottom: 30px; }
-    label { font-weight: bold; display: block; margin-bottom: 6px; color: #333; }
-    input, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; }
-    input[readonly] { background: #f3f3f3; }
-    button { width: 100%; padding: 12px; background: #00b88d; color: white; font-size: 16px; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; }
-    button:hover { background: #009f78; }
+    /* Ensure the body styles match your main theme */
+    body {
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
+      color: #222;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    h2 {
+      text-align: center;
+      color: #00b88d;
+      margin-bottom: 30px;
+      font-size: 26px; /* Slightly larger for emphasis */
+    }
+    label {
+      font-weight: 600; /* Bolder label */
+      display: block;
+      margin-bottom: 8px; /* More space below label */
+      color: #333;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px; /* Consistent border-radius */
+      font-size: 16px;
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+    input[readonly] {
+      background: #f3f3f3; /* Lighter background for readonly */
+      cursor: not-allowed;
+    }
+    button {
+      width: 100%;
+      padding: 14px; /* Increased padding for button */
+      background: #00b88d;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px; /* Consistent border-radius */
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background: #009f78;
+    }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
   <div class="container">
     <h2>✏️ 문의 작성</h2>

@@ -2,23 +2,87 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>문의</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>내 문의 내역</title>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
-    body { background-color: #f5f9f8; font-family: 'Noto Sans KR', sans-serif; }
-    .container { max-width: 900px; margin: 60px auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-    h2 { text-align: center; color: #00b88d; margin-bottom: 30px; }
-    .top-bar { text-align: right; margin-bottom: 20px; }
-    .btn { display: inline-block; padding: 10px 16px; background: #00b88d; color: white; border-radius: 8px; font-weight: bold; text-decoration: none; }
-    .btn:hover { background: #009f78; }
-    .card { background-color: #f9f9f9; border-left: 5px solid #00b88d; padding: 20px; margin-bottom: 20px; border-radius: 12px; }
-    .card p { margin: 6px 0; }
-    .answered { color: green; font-weight: bold; }
-    .pending { color: orange; font-weight: bold; }
-    .empty { text-align: center; color: #666; margin-top: 40px; }
+    /* Ensure the body styles match your main theme */
+    body {
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
+      color: #222;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    h2 {
+      text-align: center;
+      color: #00b88d;
+      margin-bottom: 30px;
+      font-size: 28px; /* Slightly larger for emphasis */
+    }
+    .top-bar {
+      text-align: right;
+      margin-bottom: 25px; /* More space below top bar */
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 18px; /* Adjusted padding */
+      background: #00b88d;
+      color: white;
+      border-radius: 10px; /* Consistent border-radius */
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    .btn:hover {
+      background: #009f78;
+    }
+    .card {
+      background-color: #f9f9f9;
+      border-left: 5px solid #00b88d;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* Subtle shadow for cards */
+    }
+    .card p {
+      margin: 6px 0;
+      line-height: 1.6; /* Better readability */
+      color: #333;
+    }
+    .card p strong {
+      color: #111;
+    }
+    .answered {
+      color: #28a745; /* A more pleasant green */
+      font-weight: bold;
+    }
+    .pending {
+      color: #ffc107; /* A more pleasant orange/yellow */
+      font-weight: bold;
+    }
+    .empty {
+      text-align: center;
+      color: #666;
+      margin-top: 40px;
+      font-size: 18px;
+      padding: 20px;
+      border: 1px dashed #ccc;
+      border-radius: 10px;
+    }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
   <div class="container">
     <h2>📋 내 문의 내역</h2>
