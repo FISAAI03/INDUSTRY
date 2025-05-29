@@ -3,11 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>카카오 추가 정보 입력</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
+    /* Ensure the body styles match your main theme */
     body {
-      background-color: #f5f9f8;
-      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
+      color: #222;
     }
 
     .form-container {
@@ -23,12 +29,13 @@
       text-align: center;
       margin-bottom: 30px;
       color: #333;
+      font-size: 26px; /* Slightly larger for emphasis */
     }
 
     .form-container label {
       display: block;
       margin-bottom: 6px;
-      font-weight: bold;
+      font-weight: 600; /* Bolder label */
       color: #333;
     }
 
@@ -38,17 +45,18 @@
       padding: 12px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 10px;
+      border-radius: 10px; /* Consistent border-radius */
       font-size: 16px;
+      box-sizing: border-box; /* Include padding in width calculation */
     }
 
     .form-container button {
       width: 100%;
-      padding: 12px;
+      padding: 14px; /* Increased padding for button */
       background-color: #00b88d;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 10px; /* Consistent border-radius */
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -60,7 +68,7 @@
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
 
   <div class="form-container">

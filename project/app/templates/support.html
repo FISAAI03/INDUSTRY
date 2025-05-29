@@ -3,8 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>공공지원금 추천</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Epilogue:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style>
+    /* Ensure the body styles match your main theme */
+    body {
+      background-color: #f9fbf9; /* Matching the main theme */
+      font-family: 'Epilogue','Noto Sans',sans-serif; /* Matching the main theme */
+      color: #222;
+    }
+
     .support-wrapper {
       max-width: 700px;
       margin: 50px auto;
@@ -18,6 +29,7 @@
       text-align: center;
       margin-bottom: 24px;
       color: #00b88d;
+      font-size: 28px; /* Slightly larger for emphasis */
     }
 
     .form-group {
@@ -25,56 +37,60 @@
     }
 
     .form-group label {
-      font-weight: bold;
+      font-weight: 600; /* Bolder label */
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
     }
 
     .form-group input,
     .form-group select {
       width: 100%;
       padding: 12px;
-      border-radius: 10px;
+      border-radius: 10px; /* Consistent border-radius */
       border: 1px solid #ccc;
+      box-sizing: border-box; /* Include padding in width calculation */
+      font-size: 16px;
     }
 
     .checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: space-between;
-  margin-top: 8px;
-}
+      display: grid; /* Use grid for better control over alignment */
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+      gap: 16px;
+      margin-top: 8px;
+      margin-bottom: 20px; /* Add margin below the group */
+    }
 
-.checkbox-group input[type="checkbox"] {
-  display: none;
-}
+    .checkbox-group input[type="checkbox"] {
+      display: none;
+    }
 
-.checkbox-group label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: calc(100% - 8px);
-  padding: 16px 12px;
-  border-radius: 12px;
-  background-color: #f2f6f9;
-  border: 2px solid transparent;
-  font-size: 15px;
-  font-weight: 500;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.25s ease-in-out;
-  text-align: center;
-}
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 12px;
+      border-radius: 12px;
+      background-color: #f2f6f9;
+      border: 2px solid transparent;
+      font-size: 15px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.25s ease-in-out;
+      text-align: center;
+      height: 100%; /* Ensure labels have consistent height in grid */
+    }
 
-.checkbox-group input[type="checkbox"]:checked + label {
-  background-color: #00b88d;
-  color: white;
-  border-color: #009f78;
-}
+    .checkbox-group input[type="checkbox"]:checked + label {
+      background-color: #00b88d;
+      color: white;
+      border-color: #009f78;
+    }
 
-.checkbox-group label:hover {
-  background-color: #e2f7f4;
-}
-
+    .checkbox-group label:hover {
+      background-color: #e2f7f4;
+    }
 
     .btn {
       width: 100%;
@@ -83,8 +99,10 @@
       font-size: 16px;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 10px; /* Consistent border-radius */
       cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s;
     }
 
     .btn:hover {
@@ -97,55 +115,62 @@
       border-left: 5px solid #00b88d;
       padding: 20px;
       border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* Subtle shadow for results */
     }
 
     .result-box h3 {
       margin-top: 0;
       color: #008f6b;
+      font-size: 20px; /* Consistent heading size */
+      margin-bottom: 15px;
     }
 
     .result-box p {
       margin: 0;
       white-space: pre-wrap;
+      line-height: 1.7; /* Better readability */
+      color: #444;
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-[#f9fbf9] font-['Epilogue','Noto Sans',sans-serif]">
   {% include '_navbar.html' %}
 
   <div class="support-wrapper">
     <h2>공공지원금 추천 서비스</h2>
     <form method="POST">
       <div class="form-group">
-  <label>거주 지역 (선택)</label>
-  <select name="region" required>
-    {% for r in regions %}
-      <option value="{{ r }}">{{ r }}</option>
-    {% endfor %}
-  </select>
-</div>
-
-
-      <div class="checkbox-group">
-  <input type="checkbox" id="led" name="actions" value="LED 조명 교체">
-  <label for="led">💡 LED 조명 교체</label>
-
-  <input type="checkbox" id="efficient" name="actions" value="에너지 고효율 가전">
-  <label for="efficient">🔌 에너지 고효율 가전</label>
-
-  <input type="checkbox" id="solar" name="actions" value="태양광 패널">
-  <label for="solar">☀️ 태양광 패널</label>
-
-  <input type="checkbox" id="ev" name="actions" value="전기차 사용">
-  <label for="ev">🚗 전기차 사용</label>
-
-  <input type="checkbox" id="standby" name="actions" value="대기전력 차단">
-  <label for="standby">🔌 대기전력 차단</label>
-</div>
+        <label for="region">거주 지역 (선택)</label>
+        <select name="region" id="region" required>
+          {% for r in regions %}
+            <option value="{{ r }}">{{ r }}</option>
+          {% endfor %}
+        </select>
+      </div>
 
       <div class="form-group">
-        <label>기존에 신청한 지원금이 있나요?</label>
-        <select name="applied">
+        <label>적용하고 있거나 관심 있는 에너지 절감 행동을 선택하세요.</label>
+        <div class="checkbox-group">
+          <input type="checkbox" id="led" name="actions" value="LED 조명 교체">
+          <label for="led">💡 LED 조명 교체</label>
+
+          <input type="checkbox" id="efficient" name="actions" value="에너지 고효율 가전">
+          <label for="efficient">🔌 에너지 고효율 가전</label>
+
+          <input type="checkbox" id="solar" name="actions" value="태양광 패널">
+          <label for="solar">☀️ 태양광 패널</label>
+
+          <input type="checkbox" id="ev" name="actions" value="전기차 사용">
+          <label for="ev">🚗 전기차 사용</label>
+
+          <input type="checkbox" id="standby" name="actions" value="대기전력 차단">
+          <label for="standby">🔌 대기전력 차단</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="applied">기존에 신청한 지원금이 있나요?</label>
+        <select name="applied" id="applied">
           <option value="없음">없음</option>
           <option value="있음">있음</option>
         </select>
