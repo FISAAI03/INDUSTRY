@@ -19,50 +19,45 @@
       >
         <h1 class="text-white text-4xl font-black leading-tight">지속 가능한 에너지로 가는 길</h1>
         <p class="text-white text-sm leading-normal max-w-2xl">
-          귀하의 필요에 맞는 맞춤형 에너지 솔루션을 찾아보세요. 전문가의 안내를 받아 탄소 발자국을 줄이고 에너지 비용을 절약하세요.
+          당신에게 필요한 맞춤형 에너지 솔루션을 찾아보세요. 전문가의 안내를 받아 탄소 발자국을 줄이고 에너지 비용을 절약하세요.
         </p>
         <a
-          href="#"
+          href="/solution"
           class="h-10 px-5 rounded-full bg-[#a5d8a5] text-sm font-bold text-[#111811] flex items-center justify-center"
         >솔루션 살펴보기</a>
       </section>
 
       <section class="mt-16">
-        <h2 class="text-[32px] font-bold text-[#111811] mb-4">우리의 서비스</h2>
-        <p class="text-[#111811] text-base mb-8 max-w-[720px]">
-          우리는 귀하가 지속 가능성 목표를 달성할 수 있도록 다양한 서비스를 제공합니다.
-        </p>
 
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
-            <img src="{{ url_for('static', filename='img/home.png') }}" class="w-8 h-8 mb-2" alt="진단 아이콘">
-            <h3 class="font-bold text-lg">에너지효율 진단 서비스</h3>
-            <p class="text-sm">건물의 에너지 사용 분석 및 효율 개선 방안 제공</p>
-            <a href="/ai-diagnosis" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
-          </div>
 
-          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
-            <img src="{{ url_for('static', filename='img/cash.png') }}" class="w-8 h-8 mb-2" alt="캐시백 아이콘">
-            <h3 class="font-bold text-lg">에너지캐시백 컨설팅 서비스</h3>
-            <p class="text-sm">에너지 절약을 통한 캐시백 혜택 제공 컨설팅</p>
-            <a href="/cashback" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
-          </div>
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6">
+  <a href="/ai-diagnosis" class="group p-6 rounded-xl bg-white border border-[#d7e9d7] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+    <img src="{{ url_for('static', filename='img/home.png') }}" class="w-10 h-10 mb-4" alt="진단 아이콘">
+    <h3 class="text-xl font-extrabold text-[#111811] mb-1 group-hover:text-[#00b88d] transition">에너지효율 진단</h3>
+    <p class="text-sm text-[#444]">건물의 에너지 사용 분석 및 효율 개선 방안 제공</p>
+  </a>
 
-          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
-            <img src="{{ url_for('static', filename='img/challenge.png') }}" class="w-8 h-8 mb-2" alt="챌린지 아이콘">
-            <h3 class="font-bold text-lg">커뮤니티 기반 절전 챌린지 서비스</h3>
-            <p class="text-sm">참여형 절전 실천 캠페인</p>
-            <a href="/challenge" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
-          </div>
+  <a href="/cashback" class="group p-6 rounded-xl bg-white border border-[#d7e9d7] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+    <img src="{{ url_for('static', filename='img/cash.png') }}" class="w-10 h-10 mb-4" alt="캐시백 아이콘">
+    <h3 class="text-xl font-extrabold text-[#111811] mb-1 group-hover:text-[#00b88d] transition">캐시백 컨설팅</h3>
+    <p class="text-sm text-[#444]">에너지 절약을 통한 캐시백 혜택 제공 컨설팅</p>
+  </a>
 
-          <div class="p-4 border rounded-lg bg-[#f9fbf9]">
-            <img src="{{ url_for('static', filename='img/cheer.png') }}" class="w-8 h-8 mb-2" alt="지원금 아이콘">
-            <h3 class="font-bold text-lg">절전 실천자 공공지원금 추천</h3>
-            <p class="text-sm">절약 실천자 대상 정부/지자체 지원금 정보 자동 제공</p>
-            <a href="/support" class="text-[#00b88d] text-sm font-semibold">바로가기</a>
-          </div>
-        </div>
-      </section>
+  <a href="/challenge" class="group p-6 rounded-xl bg-white border border-[#d7e9d7] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+    <img src="{{ url_for('static', filename='img/challenge.png') }}" class="w-10 h-10 mb-4" alt="챌린지 아이콘">
+    <h3 class="text-xl font-extrabold text-[#111811] mb-1 group-hover:text-[#00b88d] transition">절전 챌린지</h3>
+    <p class="text-sm text-[#444]">커뮤니티 기반 참여형 절전 실천 캠페인</p>
+  </a>
+
+  <a href="/support" class="group p-6 rounded-xl bg-white border border-[#d7e9d7] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+    <img src="{{ url_for('static', filename='img/cheer.png') }}" class="w-10 h-10 mb-4" alt="지원금 아이콘">
+    <h3 class="text-xl font-extrabold text-[#111811] mb-1 group-hover:text-[#00b88d] transition">지원금 추천</h3>
+    <p class="text-sm text-[#444]">정부/지자체 에너지 지원금 정보 자동 제공</p>
+  </a>
+</div>
+
+</section>
+
 
       <section class="mt-10 text-center text-[#444]">
         <p class="text-base">
