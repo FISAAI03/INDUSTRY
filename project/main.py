@@ -199,6 +199,7 @@ def create_app():
     
     @app.route('/kakao/additional', methods=['GET', 'POST'])
     def kakao_additional():
+        
         if request.method == 'POST':
             username = request.form['username']
             region = request.form['region']
@@ -206,6 +207,8 @@ def create_app():
             household_size = int(request.form['household_size'])
             email = session.get('pending_email')  # 카카오 콜백에서 저장한 값
             kakao_id = session.get('pending_id')
+            
+            
 
             conn = get_db_connection()
             cur = conn.cursor()
@@ -223,7 +226,14 @@ def create_app():
             flash("카카오 로그인 + 정보 등록 완료!")
             return redirect('/')
 
-        return render_template("kakao_additional.html")
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT name FROM regions ORDER BY name")
+        regions = [row[0] for row in cur.fetchall()]
+        conn.close()
+
+        return render_template("kakao_additional.html", regions=regions)
+
 
     @app.route('/login/kakao')
     def login_kakao():
@@ -423,6 +433,8 @@ def create_app():
 
         conn.close()
 
+        
+
         return render_template("challenge.html",
                             result=result,
                             chart=chart,
@@ -433,6 +445,10 @@ def create_app():
     # 캐시백 컨설팅
     @app.route('/cashback', methods=['GET', 'POST'])
     def cashback():
+        if 'user_id' not in session:
+            flash("로그인이 필요합니다.")
+            return redirect('/login')
+    
         if request.method == 'POST':
             base_usage = float(request.form['base_usage'])
             current_usage = float(request.form['current_usage'])
@@ -664,6 +680,10 @@ def create_app():
 
     @app.route('/support', methods=['GET', 'POST'])
     def support():
+        if 'user_id' not in session:
+            flash("로그인이 필요합니다.")
+            return redirect('/login')
+
         conn = get_db_connection()
         cur = conn.cursor()
 
@@ -701,7 +721,11 @@ def create_app():
         conn.close()
         return render_template("support.html", result=support_result, regions=regions)
 
-        
+
+
+    @app.route('/solution')
+    def solution():
+        return render_template("solution.html")    
 
     return app
 

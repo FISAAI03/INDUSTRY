@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>솔루션 소개 | EcoSolutions</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700&display=swap" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body class="bg-[#f9fbf9] text-[#111811] font-['Epilogue',sans-serif]">
+  {% include '_navbar.html' %}
+
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    <h1 class="text-3xl font-bold mb-6 text-center">🌿 우리 솔루션 한눈에 보기</h1>
+    <p class="text-center text-[#444] mb-10">
+      EcoSolutions는 탄소 절감과 에너지 절약을 위한 통합 서비스를 제공합니다.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div class="bg-white p-6 rounded-xl shadow-md border border-[#e4eae4]">
+        <h2 class="text-xl font-bold mb-2">① 에너지효율 진단</h2>
+        <p class="text-sm text-[#444]">건물 정보와 전력 사용량 기반으로 <b>AI가 절약 전략</b>을 제공합니다.<br>지역 평균과 비교한 분석 결과도 확인할 수 있어요.</p>
+        <a href="/ai-diagnosis" class="inline-block mt-4 text-[#00b88d] font-semibold text-sm">➡ 진단하러 가기</a>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-md border border-[#e4eae4]">
+        <h2 class="text-xl font-bold mb-2">② 캐시백 컨설팅</h2>
+        <p class="text-sm text-[#444]">절약률을 입력하면 <b>예상 캐시백</b>과 함께 <b>GPT가 절약 팁</b>을 제공합니다.<br>간편하게 실천 전략을 알아보세요.</p>
+        <a href="/cashback" class="inline-block mt-4 text-[#00b88d] font-semibold text-sm">➡ 캐시백 계산하기</a>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-md border border-[#e4eae4]">
+        <h2 class="text-xl font-bold mb-2">③ 절전 챌린지</h2>
+        <p class="text-sm text-[#444]">매월 실천 데이터를 입력하면 <b>순위가 매겨지고</b>, <b>그래프</b>로 절약 추이를 확인할 수 있어요.<br>실시간 랭킹과 함께 재미있게 실천해요!</p>
+        <a href="/challenge" class="inline-block mt-4 text-[#00b88d] font-semibold text-sm">➡ 챌린지 참여하기</a>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-md border border-[#e4eae4]">
+        <h2 class="text-xl font-bold mb-2">④ 공공지원금 추천</h2>
+        <p class="text-sm text-[#444]">절약 실천 항목과 지역 정보를 입력하면 <b>정부/지자체 지원금</b> 정보를 AI가 추천합니다.<br>모르고 지나쳤던 혜택을 확인해보세요.</p>
+        <a href="/support" class="inline-block mt-4 text-[#00b88d] font-semibold text-sm">➡ 지원금 확인하기</a>
+      </div>
+    </div>
+
+    <div class="mt-16 text-center">
+      <p class="text-[#333] text-base">
+        EcoSolutions는 <b>AI + 공공데이터 + 사용자 실천</b>을 결합한 에너지 솔루션 플랫폼입니다.<br>
+        지속가능한 내일을 함께 만들어가요 🌍
+      </p>
+    </div>
+  </main>
+</body>
+</html>
